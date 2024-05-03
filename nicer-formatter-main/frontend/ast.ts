@@ -82,4 +82,6 @@ export interface FunctionDeclaration extends Declaration {
   name: string;
   body: Stmt[];
   params: ParameterExpression[];
+  hasType: boolean;
+  Type?: string;
 }
