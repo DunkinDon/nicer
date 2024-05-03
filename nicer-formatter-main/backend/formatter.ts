@@ -73,7 +73,6 @@ export default function formatAST(ast: Program, rules: object): string {
               }
               count += 1;
             });
-            console.log(param);
             if (rules.hasOwnProperty("tabSize")) {
               const tabSize = rules["tabSize"];
               for (let i = 0; i < tabSize; i++) {
