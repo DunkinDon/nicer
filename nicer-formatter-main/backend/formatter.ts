@@ -122,6 +122,27 @@ export default function formatAST(ast: Program, rules: object): string {
                     `\n};`
                   );
               }
+            } else {
+              switch (node.state) {
+                case 0:
+                  return (
+                    `\nfunction ${name}(${params})${newLineBrace}{\n` +
+                    bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
+                    `\n};`
+                  );
+                case 1:
+                  return (
+                    `\nprivate ${name}(${params}${newLineBrace}{\n` +
+                    bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
+                    `\n};`
+                  );
+                case 2:
+                  return (
+                    `\npublic ${name}(${params})${newLineBrace}{\n` +
+                    bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
+                    `\n};`
+                  );
+              }
             }
 
           case "ReturnExpr":
