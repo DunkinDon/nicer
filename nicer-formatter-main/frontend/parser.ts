@@ -85,6 +85,15 @@ export default class Parser {
       }
     }
     this.consume();
+    let type;
+    while (this.at().type != TokenType.OpenBrace) {
+      if (this.at().type == TokenType.Colon) {
+        this.consume();
+        type = this.consume().value;
+      } else if (this.at().type == TokenType.OpenBrace) {
+        break;
+      }
+    }
     this.expect(TokenType.OpenBrace);
     const body: Stmt[] = [];
     while (this.at().type != TokenType.CloseBrace && this.not_eof()) {
@@ -92,12 +101,24 @@ export default class Parser {
     }
     this.expect(TokenType.CloseBrace);
 
+    if (type) {
+      return {
+        kind: "FunctionDeclaration",
+        name: name,
+        body: body,
+        state: state,
+        params: params,
+		hasType: true,
+		Type: type
+      } as unknown as FunctionDeclaration;
+    }
     return {
       kind: "FunctionDeclaration",
       name: name,
       body: body,
       state: state,
       params: params,
+	  hasType: false,
     } as unknown as FunctionDeclaration;
   }
   private parseVariableDeclaration(state: number): VariableDeclaration {
