@@ -1,6 +1,6 @@
 const x = 1;
 
-function multiply(x: number, iterations: number): number {
-  let total = 0;
-  return total
-};
+function multiply(x, iterations: number): number {
+  let total = x * iterations;
+  return total;
+}
