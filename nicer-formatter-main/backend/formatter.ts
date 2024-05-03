@@ -65,13 +65,21 @@ export default function formatAST(ast: Program, rules: object): string {
             param.forEach((parameter) => {
               if (count != 0) {
                 if (parameter) {
-                  params.push(" " + parameter.param + ": " + parameter.Type);
+                  if (parameter.Type == undefined) {
+                    params.push(" " + parameter.param);
+                  } else {
+                    params.push(" " + parameter.param + ": " + parameter.Type);
+                  }
                 } else {
                   params.push("");
                 }
               } else {
                 if (parameter) {
-                  params.push(parameter.param + ": " + parameter.Type);
+                  if (parameter.Type == undefined) {
+                    params.push(parameter.param);
+                  } else {
+                    params.push(parameter.param + ": " + parameter.Type);
+                  }
                 } else {
                   params.push("");
                 }
