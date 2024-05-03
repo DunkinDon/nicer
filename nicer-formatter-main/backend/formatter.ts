@@ -20,7 +20,7 @@ export default function formatAST(ast: Program, rules: object): string {
                 node.operator +
                 " " +
                 formatNode(node.right) +
-                ");"
+                ")"
               );
             } else {
               return (
@@ -173,7 +173,7 @@ export default function formatAST(ast: Program, rules: object): string {
                 node.operator +
                 " " +
                 formatNode(node.right) +
-                ");"
+                ")"
               );
             } else {
               return (
@@ -377,7 +377,7 @@ export default function formatAST(ast: Program, rules: object): string {
 
         case "ReturnExpr":
           if (node.isParens) {
-            return "return (" + formatNode(node.returnValue) + ")";
+            return "return (" + formatNode(node.returnValue) + ");";
           } else {
             return "return " + formatNode(node.returnValue);
           }
