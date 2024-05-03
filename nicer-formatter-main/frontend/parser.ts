@@ -88,7 +88,7 @@ export default class Parser {
     let type;
     while (this.at().type != TokenType.OpenBrace) {
       if (this.at().type == TokenType.Colon) {
-        this.consume();
+        this.expect(TokenType.Identifier);
         type = this.consume().value;
       } else if (this.at().type == TokenType.OpenBrace) {
         break;
@@ -108,8 +108,8 @@ export default class Parser {
         body: body,
         state: state,
         params: params,
-		hasType: true,
-		Type: type
+        hasType: true,
+        Type: type,
       } as unknown as FunctionDeclaration;
     }
     return {
@@ -118,7 +118,7 @@ export default class Parser {
       body: body,
       state: state,
       params: params,
-	  hasType: false,
+      hasType: false,
     } as unknown as FunctionDeclaration;
   }
   private parseVariableDeclaration(state: number): VariableDeclaration {
