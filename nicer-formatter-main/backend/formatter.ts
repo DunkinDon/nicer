@@ -49,6 +49,11 @@ export default function formatAST(ast: Program, rules: object): string {
             const name = node.name;
             const body = node.body;
             const param = node.params;
+            let type;
+            const hasType = node.hasType;
+            if (hasType) {
+              type = node.Type;
+            }
             const bodies: string[] = [];
             const params: string[] = [];
             let tabs: string = "";
@@ -88,25 +93,27 @@ export default function formatAST(ast: Program, rules: object): string {
                 newLineBrace = "\n";
               }
             }
-            switch (node.state) {
-              case 0:
-                return (
-                  `\nfunction ${name}(${params})${newLineBrace}{\n` +
-                  bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
-                  `\n};`
-                );
-              case 1:
-                return (
-                  `\nprivate ${name}(${params}) {\n` +
-                  bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
-                  `\n};`
-                );
-              case 2:
-                return (
-                  `\npublic ${name}(${params}) {\n` +
-                  bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
-                  `\n};`
-                );
+            if (hasType) {
+              switch (node.state) {
+                case 0:
+                  return (
+                    `\nfunction ${name}(${params}): ${type}${newLineBrace}{\n` +
+                    bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
+                    `\n};`
+                  );
+                case 1:
+                  return (
+                    `\nprivate ${name}(${params}): ${type}${newLineBrace}{\n` +
+                    bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
+                    `\n};`
+                  );
+                case 2:
+                  return (
+                    `\npublic ${name}(${params}): ${type}${newLineBrace}{\n` +
+                    bodies.map((stmt) => `${tabs}${stmt}`).join("\n") +
+                    `\n};`
+                  );
+              }
             }
 
           case "ReturnExpr":
